@@ -1,2 +1,3 @@
 # CommunityStructure
-Community structure detection in graphs
+
+Community detection in graphs/networks project
