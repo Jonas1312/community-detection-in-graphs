@@ -9,7 +9,6 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 
-
 # Stochastic block model parameters
 #----------------------------------------------------------------------
 n_vertices = 15  # number of vertices
@@ -21,25 +20,21 @@ probability_matrix = np.array([
     [.1, .1, .1, 0.7],
 ]) # symetric matrix of edge probabilities
 community_labels = [random.randint(0, n_communities-1) for i in xrange(n_vertices)] # community label assigned to each vertices
-graph_matrix = np.zeros((n_vertices, n_vertices), dtype=int) # Adjacency matrix initialization
-
+graph_matrix = np.zeros((n_vertices, n_vertices), dtype=int) # adjacency matrix initialization
 
 # Adjacency matrix generation
 #----------------------------------------------------------------------
 for i in xrange(n_vertices):
     for j in xrange(i):
-        community_a = community_labels[i]
-        community_b = community_labels[j]
-
+        community_i = community_labels[i]
+        community_j = community_labels[j]
+        val = probability_matrix[community_i][community_j]
         p = random.random()
-        val = probability_matrix[community_a][community_b]
-
         if p <= val:
             graph_matrix[i][j] = 1
 
-print(graph_matrix) # Print adjacency matrix
-G = nx.from_numpy_matrix(graph_matrix) # Generate networkx graph
-
+print(graph_matrix) # print adjacency matrix
+G = nx.from_numpy_matrix(graph_matrix) # generate networkx graph
 
 # Draw generated graph and print communities
 #----------------------------------------------------------------------
