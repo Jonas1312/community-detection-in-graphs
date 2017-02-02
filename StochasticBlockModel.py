@@ -11,18 +11,18 @@ import matplotlib.pyplot as plt
 
 #----------------------------------------------------------------------
 def degreesExpectations(probability_matrix, n_communities, community_labels):
-    """Calculate communities degrees expectations"""
+    """Calculate expected degrees of each community"""
     n = [len(np.argwhere(community_labels==i)) for i in xrange(n_communities)] # number of vertices per communities (n1, n2, ..., nk)
     return np.dot(probability_matrix[:n_communities,:n_communities], n) # return [E(d1), E(d2), ..., E[d(k)]]
 
 #----------------------------------------------------------------------
 # Stochastic block model parameters
-n_vertices = 20  # number of vertices
-n_communities = 3  # number of communities
-community_labels = np.random.randint(0, n_communities, n_vertices) # community label assigned to each vertex
+n_vertices = 50  # number of vertices
+n_communities = 2  # number of communities
+community_labels = np.random.randint(low=0, high=n_communities, size=n_vertices) # community label assigned to each vertex
 probability_matrix = np.array([
-    [0.1, .01, .1, .01],
-    [.01, 0.9, .9, .01],
+    [0.0, .1, .1, .01],
+    [.1, 0.9, .9, .01],
     [.1, .9, 0.5, .01],
     [.01, .01, .01, 0.1],
 ]) # matrix of edge probabilities
