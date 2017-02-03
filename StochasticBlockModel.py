@@ -17,8 +17,8 @@ def degreesExpectations(probability_matrix, n_communities, community_labels):
 
 #----------------------------------------------------------------------
 # Stochastic block model parameters
-n_vertices = 50  # number of vertices
-n_communities = 2  # number of communities
+n_vertices = 20  # number of vertices
+n_communities = 4  # number of communities
 community_labels = np.random.randint(low=0, high=n_communities, size=n_vertices) # community label assigned to each vertex
 probability_matrix = np.array([
     [0.0, .1, .1, .01],
@@ -47,8 +47,8 @@ G = nx.from_numpy_matrix(graph_matrix) # generate networkx graph
 
 #----------------------------------------------------------------------
 # Draw generated graph and print communities
-color_map = ['cyan', 'red', 'yellow', 'magenta', 'blue', 'green', 'white'][:n_communities]
-node_color = [color_map[i] for i in community_labels]
+color_map = np.array(['cyan', 'red', 'yellow', 'magenta', 'blue', 'green', 'white'][:n_communities])
+node_color = color_map[community_labels]
 labels = {key: key+1 for key in xrange(n_vertices)} # vertices numbers
 nx.draw(G, labels=labels, node_color=node_color, font_size=12)
 
