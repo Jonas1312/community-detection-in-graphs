@@ -4,6 +4,7 @@
   Purpose:  Stochastic block model
   Created:  01/02/2017
 """
+from __future__ import division
 from time import clock
 import numpy as np
 import networkx as nx
@@ -16,18 +17,36 @@ def degreesExpectations(probability_matrix, n_per_community):
     return np.dot(probability_matrix[:len(n_per_community),:len(n_per_community)], n_per_community) # return [E(d1), E(d2), ..., E(dk)]
 
 #----------------------------------------------------------------------
-def diagDegreeMatrix(adjacency_matrix, lower_triangular=False):
-    """Return D diagonal matrix where D[i,i] is degree of each node i"""
-    return np.diag(np.sum(adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix, axis=0))
+def degreesVector(adjacency_matrix, lower_triangular=False):
+    """Return vector where d[i] is the degree of each node i"""
+    return np.sum(adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix, axis=0)
 
 #----------------------------------------------------------------------
-def averageDegree(adjacency_matrix, lower_triangular=False):
-    """Return average degree of a graph represented by his adjacency matrix"""
-    return np.mean(np.sum(adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix, axis=0))
+def LaplacianMatrix(adjacency_matrix, lower_triangular=False):
+    """Return Laplacian matrix of a given graph"""
+    d = degreesVector(adjacency_matrix, lower_triangular=lower_triangular)
+    D_inv_square_root = np.linalg.matrix_power(np.diag(d), -1/2)
+    return np.dot(np.dot(D_inv_square_root,adjacency_matrix), D_inv_square_root)
+
+#----------------------------------------------------------------------
+def ModularityMatrix(adjacency_matrix, lower_triangular=False):
+    """Return modularity matrix of a given graph"""
+    d = degreesVector(adjacency_matrix, lower_triangular=lower_triangular)
+    sum_degrees = np.sum(d)
+    return (adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix) - np.dot(d,d.T)/sum_degrees
+
+#----------------------------------------------------------------------
+def BetheHessian(adjacency_matrix, lower_triangular=False, r=None):
+    """Return Bethe Hessian matrix of a given graph. By default r = sqrt(sum(di)/n)"""
+    d = degreesVector(adjacency_matrix, lower_triangular=lower_triangular)
+    if r is None:
+        sum_degrees = np.sum(d)
+        r = np.sqrt(np.sum(d)/len(d))
+    return (r**2 - 1)*np.identity(len(d)) - r*A + np.diag(d)
 
 #----------------------------------------------------------------------
 # Stochastic block model parameters
-n_vertices = 6  # number of vertices
+n_vertices = 10  # number of vertices
 n_communities = 2  # number of communities
 community_labels = np.random.randint(low=0, high=n_communities, size=n_vertices) # community label assigned to each vertex
 n_per_community = [len(np.argwhere(community_labels == i)) for i in xrange(n_communities)] # number of vertices per community (n1, n2, ..., nk)
