@@ -9,6 +9,7 @@ from time import clock
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+import scipy.linalg as linalg
 import sys
 
 #----------------------------------------------------------------------
@@ -25,7 +26,7 @@ def degreesVector(adjacency_matrix, lower_triangular=False):
 def LaplacianMatrix(adjacency_matrix, lower_triangular=False):
     """Return Laplacian matrix of a given graph"""
     d = degreesVector(adjacency_matrix, lower_triangular=lower_triangular)
-    D_inv_square_root = np.linalg.matrix_power(np.diag(d), -1/2)
+    D_inv_square_root = linalg.fractional_matrix_power(np.diag(d), -0.5)
     return np.dot(np.dot(D_inv_square_root,adjacency_matrix), D_inv_square_root)
 
 #----------------------------------------------------------------------
@@ -40,9 +41,8 @@ def BetheHessian(adjacency_matrix, lower_triangular=False, r=None):
     """Return Bethe Hessian matrix of a given graph. By default r = sqrt(sum(di)/n)"""
     d = degreesVector(adjacency_matrix, lower_triangular=lower_triangular)
     if r is None:
-        sum_degrees = np.sum(d)
         r = np.sqrt(np.sum(d)/len(d))
-    return (r**2 - 1)*np.identity(len(d)) - r*A + np.diag(d)
+    return (r**2 - 1)*np.identity(len(d)) - r*(adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix) + np.diag(d)
 
 #----------------------------------------------------------------------
 # Stochastic block model parameters
@@ -51,7 +51,7 @@ n_communities = 2  # number of communities
 community_labels = np.random.randint(low=0, high=n_communities, size=n_vertices) # community label assigned to each vertex
 n_per_community = [len(np.argwhere(community_labels == i)) for i in xrange(n_communities)] # number of vertices per community (n1, n2, ..., nk)
 probability_matrix = np.array([
-    [0.1, .1, .1, .01],
+    [0.9, .1, .1, .01],
     [.1, 0.9, .9, .01],
     [.1, .9, 0.5, .011],
     [.01, .01, .01, 0.1],
@@ -72,6 +72,7 @@ for i in xrange(n_vertices):
 
 print("Time taken to generate the graph: " + str((clock() - t0)*1000) + "ms")
 print("Size: " + str(sys.getsizeof(graph_matrix)/1024) + "ko\n")
+print(BetheHessian(graph_matrix, lower_triangular=True))
 
 #----------------------------------------------------------------------
 # Draw generated graph and print communities
