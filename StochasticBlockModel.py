@@ -11,24 +11,35 @@ import matplotlib.pyplot as plt
 import sys
 
 #----------------------------------------------------------------------
-def degreesExpectations(probability_matrix, n_communities, community_labels):
-    """Calculate expected degrees of vertices in each community"""
-    n = [len(np.argwhere(community_labels == i)) for i in xrange(n_communities)] # number of vertices per communities (n1, n2, ..., nk)
-    return np.dot(probability_matrix[:n_communities,:n_communities], n) # return [E(d1), E(d2), ..., E(dk)]
+def degreesExpectations(probability_matrix, n_per_community):
+    """Calculate expected degrees of vertices in each community (C1, ..., Ck)"""
+    return np.dot(probability_matrix[:len(n_per_community),:len(n_per_community)], n_per_community) # return [E(d1), E(d2), ..., E(dk)]
+
+#----------------------------------------------------------------------
+def diagDegreeMatrix(adjacency_matrix, lower_triangular=False):
+    """Return D diagonal matrix where D[i,i] is degree of each node i"""
+    return np.diag(np.sum(adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix, axis=0))
+
+#----------------------------------------------------------------------
+def averageDegree(adjacency_matrix, lower_triangular=False):
+    """Return average degree of a graph represented by his adjacency matrix"""
+    return np.mean(np.sum(adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix, axis=0))
 
 #----------------------------------------------------------------------
 # Stochastic block model parameters
-n_vertices = 1000  # number of vertices
+n_vertices = 6  # number of vertices
 n_communities = 2  # number of communities
 community_labels = np.random.randint(low=0, high=n_communities, size=n_vertices) # community label assigned to each vertex
+n_per_community = [len(np.argwhere(community_labels == i)) for i in xrange(n_communities)] # number of vertices per community (n1, n2, ..., nk)
 probability_matrix = np.array([
     [0.1, .1, .1, .01],
     [.1, 0.9, .9, .01],
-    [.1, .9, 0.5, .01],
+    [.1, .9, 0.5, .011],
     [.01, .01, .01, 0.1],
 ]) # matrix of edge probabilities
-if(not (probability_matrix.transpose() == probability_matrix).all()):
+if(not (probability_matrix.T == probability_matrix).all()):
     print("Probability matrix isn't symmetric!")
+
 #----------------------------------------------------------------------
 # Adjacency matrix generation (strictly lower triangular as graph is undirected)
 t0 = clock()
@@ -46,7 +57,7 @@ print("Size: " + str(sys.getsizeof(graph_matrix)/1024) + "ko\n")
 #----------------------------------------------------------------------
 # Draw generated graph and print communities
 color_map = np.array(['cyan', 'red', 'yellow', 'magenta', 'blue', 'green', 'white'][:n_communities])
-degrees_expectations = degreesExpectations(probability_matrix, n_communities, community_labels)
+degrees_expectations = degreesExpectations(probability_matrix, n_per_community)
 for i in xrange(n_communities):
     indices = [j+1 for j, x in enumerate(community_labels) if x == i]
     print("Community C{}, color: {}, E[di] = {}".format(str(i), color_map[i], degrees_expectations[i]))
