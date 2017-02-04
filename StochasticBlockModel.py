@@ -12,14 +12,14 @@ import sys
 
 #----------------------------------------------------------------------
 def degreesExpectations(probability_matrix, n_communities, community_labels):
-    """Calculate expected degrees of each community"""
+    """Calculate expected degrees of vertices in each community"""
     n = [len(np.argwhere(community_labels == i)) for i in xrange(n_communities)] # number of vertices per communities (n1, n2, ..., nk)
     return np.dot(probability_matrix[:n_communities,:n_communities], n) # return [E(d1), E(d2), ..., E(dk)]
 
 #----------------------------------------------------------------------
 # Stochastic block model parameters
-n_vertices = 50  # number of vertices
-n_communities = 3  # number of communities
+n_vertices = 1000  # number of vertices
+n_communities = 2  # number of communities
 community_labels = np.random.randint(low=0, high=n_communities, size=n_vertices) # community label assigned to each vertex
 probability_matrix = np.array([
     [0.1, .1, .1, .01],
@@ -29,10 +29,10 @@ probability_matrix = np.array([
 ]) # matrix of edge probabilities
 if(not (probability_matrix.transpose() == probability_matrix).all()):
     print("Probability matrix isn't symmetric!")
-graph_matrix = np.zeros((n_vertices, n_vertices), dtype=bool) # adjacency matrix initialization
 #----------------------------------------------------------------------
 # Adjacency matrix generation (strictly lower triangular as graph is undirected)
 t0 = clock()
+graph_matrix = np.zeros((n_vertices, n_vertices), dtype=bool) # adjacency matrix initialization
 for i in xrange(n_vertices):
     for j in xrange(i):
         val = probability_matrix[community_labels[i],community_labels[j]]
@@ -40,8 +40,8 @@ for i in xrange(n_vertices):
         if p <= val:
             graph_matrix[i][j] = 1
 
-print("Time taken to generate the graph: " + str((clock() - t0)*1000) + "ms\n")
-G = nx.from_numpy_matrix(graph_matrix) # generate networkx graph
+print("Time taken to generate the graph: " + str((clock() - t0)*1000) + "ms")
+print("Size: " + str(sys.getsizeof(graph_matrix)/1024) + "ko\n")
 
 #----------------------------------------------------------------------
 # Draw generated graph and print communities
@@ -54,6 +54,7 @@ for i in xrange(n_communities):
 if n_vertices > 100: sys.exit(0) # Can't draw if number of vertices is too big
 node_color = color_map[community_labels]
 labels = {key: key+1 for key in xrange(n_vertices)} # vertices numbers
+G = nx.from_numpy_matrix(graph_matrix) # generate networkx graph
 nx.draw(G, labels=labels, node_color=node_color, font_size=12)
 
 plt.show()
