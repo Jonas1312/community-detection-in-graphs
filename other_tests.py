@@ -13,6 +13,11 @@ def LaplacianMatrix(adjacency_matrix):
 	return np.dot(np.dot(D_inv_square_root, adjacency_matrix), D_inv_square_root)
 
 #----------------------------------------------------------------------
+def LaplacianMatrix_2(adjacency_matrix):    #other form of Laplacian Matrix found on internet
+	d = degreesVector(adjacency_matrix)
+	return(np.diag(d)-adjacency_matrix)
+	
+#----------------------------------------------------------------------
 def ModularityMatrix(adjacency_matrix):
 	"""Return modularity matrix of a given graph"""
 	d = degreesVector(adjacency_matrix)
