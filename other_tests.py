@@ -5,6 +5,8 @@
   Created:  05/02/2017
 """
 
+import scipy.linalg as linalg
+
 #----------------------------------------------------------------------
 def LaplacianMatrix(adjacency_matrix):
 	"""Return Laplacian matrix of a given graph"""
