@@ -18,31 +18,30 @@ def degreesExpectations(probability_matrix, n_per_community):
     return np.dot(probability_matrix[:len(n_per_community),:len(n_per_community)], n_per_community) # return [E(d1), E(d2), ..., E(dk)]
 
 #----------------------------------------------------------------------
-def degreesVector(adjacency_matrix, lower_triangular=False):
+def degreesVector(adjacency_matrix):
     """Return vector where d[i] is the degree of each node i"""
-    return np.sum(adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix, axis=0)
+    return np.sum(adjacency_matrix, axis=0)
 
 #----------------------------------------------------------------------
-def LaplacianMatrix(adjacency_matrix, lower_triangular=False):
+def LaplacianMatrix(adjacency_matrix):
     """Return Laplacian matrix of a given graph"""
-    d = degreesVector(adjacency_matrix, lower_triangular=lower_triangular)
+    d = degreesVector(adjacency_matrix)
     D_inv_square_root = linalg.fractional_matrix_power(np.diag(d), -0.5)
-    return np.dot(np.dot(D_inv_square_root,adjacency_matrix), D_inv_square_root)
+    return np.dot(np.dot(D_inv_square_root, adjacency_matrix), D_inv_square_root)
 
 #----------------------------------------------------------------------
-def ModularityMatrix(adjacency_matrix, lower_triangular=False):
+def ModularityMatrix(adjacency_matrix):
     """Return modularity matrix of a given graph"""
-    d = degreesVector(adjacency_matrix, lower_triangular=lower_triangular)
-    sum_degrees = np.sum(d)
-    return (adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix) - np.dot(d,d.T)/sum_degrees
+    d = degreesVector(adjacency_matrix)
+    return adjacency_matrix - np.dot(d,d.T)/np.sum(d)
 
 #----------------------------------------------------------------------
-def BetheHessian(adjacency_matrix, lower_triangular=False, r=None):
+def BetheHessian(adjacency_matrix, r=None):
     """Return Bethe Hessian matrix of a given graph. By default r = sqrt(sum(di)/n)"""
-    d = degreesVector(adjacency_matrix, lower_triangular=lower_triangular)
+    d = degreesVector(adjacency_matrix)
     if r is None:
         r = np.sqrt(np.sum(d)/len(d))
-    return (r**2 - 1)*np.identity(len(d)) - r*(adjacency_matrix + adjacency_matrix.T if lower_triangular else adjacency_matrix) + np.diag(d)
+    return (r**2 - 1)*np.identity(len(d)) - r*adjacency_matrix + np.diag(d)
 
 #----------------------------------------------------------------------
 # Stochastic block model parameters
@@ -60,7 +59,7 @@ if(not (probability_matrix.T == probability_matrix).all()):
     print("Probability matrix isn't symmetric!")
 
 #----------------------------------------------------------------------
-# Adjacency matrix generation (strictly lower triangular as graph is undirected)
+# Adjacency matrix generation
 t0 = clock()
 graph_matrix = np.zeros((n_vertices, n_vertices), dtype=bool) # adjacency matrix initialization
 for i in xrange(n_vertices):
@@ -70,9 +69,9 @@ for i in xrange(n_vertices):
         if p <= val:
             graph_matrix[i][j] = 1
 
+graph_matrix += graph_matrix.T # symmetric as graph is undirected
 print("Time taken to generate the graph: " + str((clock() - t0)*1000) + "ms")
 print("Size: " + str(sys.getsizeof(graph_matrix)/1024) + "ko\n")
-print(BetheHessian(graph_matrix, lower_triangular=True))
 
 #----------------------------------------------------------------------
 # Draw generated graph and print communities
