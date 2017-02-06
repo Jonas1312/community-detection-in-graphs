@@ -5,7 +5,7 @@
   Created:  05/02/2017
 """
 
-import scipy.linalg as linalg
+#import scipy.linalg as linalg
 
 #----------------------------------------------------------------------
 def LaplacianMatrix(adjacency_matrix):
@@ -32,3 +32,34 @@ def BetheHessian(adjacency_matrix, r=None):
 	if r is None:
 		r = np.sqrt(np.sum(d)/len(d))
 	return (r**2 - 1)*np.identity(len(d)) - r*adjacency_matrix + np.diag(d)
+
+#-----------------------------------------------------------------------
+#K mean adapted to graphs (2 communities)
+def Kmean(adjacency_matrix):
+	communities = np.zeros(n_vertices)
+	communities_temp = np.zeros(n_vertices)
+	s0 = int(np.random.rand()*n_vertices)
+	communities[s0] = 1
+	print('initialisation community 1 '+ str(s0))
+	s1 = int(np.random.rand()*n_vertices)
+	while(s1==s0):
+		s1 = int(np.random.rand()*n_vertices)
+	communities[s1] = -1
+	print('initialisation community 2 '+ str(s1))
+	n_iterations = 5 #nombre d'itérations
+	for iteration in xrange(n_iterations):
+		communities_temp = np.zeros(n_vertices)
+		for s in xrange(n_vertices):
+			comm1 = 0
+			comm2 = 0
+			for p in xrange(n_vertices):
+				if(communities[p]==-1) and adjacency_matrix[p,s]==True:
+					comm1+= 1 #╚c'est là que j'ai fais de la merde
+				elif(communities[p]==1) and adjacency_matrix[p,s]==True:
+					comm2+=1
+				if comm1>comm2:
+					communities_temp[s] = -1
+				elif comm1<comm2:
+					communities_temp[s] = 1
+		communities,communities_temp = communities_temp,communities
+	return(communities) #+1 -> community one, -1 -> community 2, 0 : undefined
