@@ -19,17 +19,21 @@ def LaplacianMatrix(adjacency_matrix):
 # ----------------------------------------------------------------------
 def LaplacianMatrix_2(adjacency_matrix):
     """
-
-    :param adjacency_matrix:
-    :return:
+    return an other form of Laplacian Matrix found on internet
+    :param adjacency_matrix: np.array
+    :return: np.array (Laplacian matrix)
     """
-    # other form of Laplacian Matrix found on internet
     d = degreesVector(adjacency_matrix)
     return (np.diag(d) - adjacency_matrix)
 
 
 # ----------------------------------------------------------------------
 def ModularityMatrix(adjacency_matrix):
+    """
+    return the Modularity matrix
+    :param adjacency_matrix:
+    :return:
+    """
     """Return modularity matrix of a given graph"""
     d = degreesVector(adjacency_matrix)
     return adjacency_matrix - np.dot(d, d.T) / np.sum(d)
