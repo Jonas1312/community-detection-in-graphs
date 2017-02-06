@@ -16,7 +16,12 @@ class SBM:
 
     #----------------------------------------------------------------------
     def __init__(self, n_vertices, n_communities, probability_matrix):
-        """Constructor"""
+        """
+        Constructor
+        :param n_vertices: int
+        :param n_communities: int
+        :param probability_matrix: np.array
+        """
         self.n_vertices = n_vertices  # number of vertices
         self.n_communities = n_communities  # number of communities
         if(not (probability_matrix.T == probability_matrix).all()):
@@ -31,7 +36,10 @@ class SBM:
 
     #----------------------------------------------------------------------
     def ajacencyMatrix(self):
-        """Generate adajcency matrix"""
+        """
+        Generate adajcency matrix
+        :return: np.array
+        """
         t0 = clock()
         graph_matrix = np.zeros((self.n_vertices, self.n_vertices), dtype=bool) # adjacency matrix initialization
         for i in xrange(self.n_vertices):
@@ -48,12 +56,18 @@ class SBM:
 
     #----------------------------------------------------------------------
     def degreesExpectations(self):
-        """Calculate expected degrees of vertices in each community (C1, ..., Ck)"""
+        '''
+        Calculate expected degrees of vertices in each community (C1, ..., Ck)
+        :return: np.array
+        '''
         return np.dot(self.probability_matrix, self.n_per_community) # return [E(d1), E(d2), ..., E(dk)]
 
     #----------------------------------------------------------------------
     def degreesVector(self):
-        """Return vector where d[i] is the degree of each node i"""
+        """
+        Return vector where d[i] is the degree of each node i
+        :return: np.array
+        """
         return np.sum(self.adjacency_matrix, axis=0)
 
 

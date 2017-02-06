@@ -10,7 +10,11 @@ import scipy.linalg as linalg
 
 # ----------------------------------------------------------------------
 def LaplacianMatrix(adjacency_matrix):
-    """Return Laplacian matrix of a given graph"""
+    """
+    Return Laplacian matrix of a given graph (first version)
+    :param adjacency_matrix: np.array symetric square matrix
+    :return: np.array square matrix
+    """
     d = degreesVector(adjacency_matrix)
     D_inv_square_root = linalg.fractional_matrix_power(np.diag(d), -0.5)
     return np.dot(np.dot(D_inv_square_root, adjacency_matrix), D_inv_square_root)
@@ -30,11 +34,10 @@ def LaplacianMatrix_2(adjacency_matrix):
 # ----------------------------------------------------------------------
 def ModularityMatrix(adjacency_matrix):
     """
-    return the Modularity matrix
+    Return modularity matrix of a given graph
     :param adjacency_matrix: np.array symetric square matrix
     :return: np.array square matrix
     """
-    """Return modularity matrix of a given graph"""
     d = degreesVector(adjacency_matrix)
     return adjacency_matrix - np.dot(d, d.T) / np.sum(d)
 
