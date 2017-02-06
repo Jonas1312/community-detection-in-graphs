@@ -5,7 +5,7 @@
   Created:  05/02/2017
 """
 
-#import scipy.linalg as linalg
+import scipy.linalg as linalg
 
 #----------------------------------------------------------------------
 def LaplacianMatrix(adjacency_matrix):

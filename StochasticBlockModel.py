@@ -71,7 +71,7 @@ if __name__ == '__main__':
     # is that any tractable algorithm will only detect communities if
     # abs(cin - cout) > n_communities*sqrt(c), where c is the average degree.
     cin = 13
-    cout = 0
+    cout = 1
     probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout, dtype=int) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities
     sbm = SBM(n_vertices, n_communities, probability_matrix)
     print("Average degree: " + str(sbm.average_degree))
