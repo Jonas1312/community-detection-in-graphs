@@ -20,7 +20,7 @@ def LaplacianMatrix(adjacency_matrix):
 def LaplacianMatrix_2(adjacency_matrix):
     """
     return an other form of Laplacian Matrix found on internet
-    :param adjacency_matrix: np.array
+    :param adjacency_matrix: np.array symetric square matrix
     :return: np.array (Laplacian matrix)
     """
     d = degreesVector(adjacency_matrix)
@@ -31,8 +31,8 @@ def LaplacianMatrix_2(adjacency_matrix):
 def ModularityMatrix(adjacency_matrix):
     """
     return the Modularity matrix
-    :param adjacency_matrix:
-    :return:
+    :param adjacency_matrix: np.array symetric square matrix
+    :return: np.array square matrix
     """
     """Return modularity matrix of a given graph"""
     d = degreesVector(adjacency_matrix)
@@ -41,7 +41,12 @@ def ModularityMatrix(adjacency_matrix):
 
 # ----------------------------------------------------------------------
 def BetheHessian(adjacency_matrix, r=None):
-    """Return Bethe Hessian matrix of a given graph. By default r = sqrt(sum(di)/n)"""
+    """
+    Return Bethe Hessian matrix of a given graph. By default r = sqrt(sum(di)/n)
+    :param adjacency_matrix: np.array symetric square matrix
+    :param r: float (parameter)
+    :return: np.array square matrix
+    """
     d = degreesVector(adjacency_matrix)
     if r is None:
         r = np.sqrt(np.sum(d) / len(d))
@@ -49,8 +54,13 @@ def BetheHessian(adjacency_matrix, r=None):
 
 
 # -----------------------------------------------------------------------
-# K mean adapted to graphs (2 communities)
 def Kmean(adjacency_matrix):
+    """
+    K mean adapted to graphs (2 communities)
+    return a list of -1 (fist community) and +1 (second community). 0 = undefined community
+    :param adjacency_matrix:
+    :return: np.array
+    """
     communities = np.zeros(n_vertices)
     communities_temp = np.zeros(n_vertices)
     s0 = int(np.random.rand() * n_vertices)
@@ -69,7 +79,7 @@ def Kmean(adjacency_matrix):
             comm2 = 0
             for p in xrange(n_vertices):
                 if (communities[p] == -1) and adjacency_matrix[p, s] == True:
-                    comm1 += 1  # ╚c'est là que j'ai fais de la merde
+                    comm1 += 1
                 elif (communities[p] == 1) and adjacency_matrix[p, s] == True:
                     comm2 += 1
                 if comm1 > comm2:
