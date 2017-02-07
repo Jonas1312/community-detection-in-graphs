@@ -92,12 +92,14 @@ if __name__ == '__main__':
 
     #----------------------------------------------------------------------
     # Draw generated graph and print communities
+
     color_map = np.array(['cyan', 'red', 'yellow', 'magenta', 'blue', 'green', 'white'][:n_communities])
     for i in xrange(n_communities):
         indices = [j+1 for j, x in enumerate(sbm.community_labels) if x == i]
         print("Community C{}, n{} = {} vertices, color: {}, E[di] = {}".format(str(i), i, sbm.n_per_community[i], color_map[i], sbm.expected_degrees[i]))
 
     if n_vertices > 100:
+        print("graphe trop grand pour être affiché, fin du programme")
         sys.exit(0) # Can't draw if number of vertices is too big
     G = nx.from_numpy_matrix(sbm.adjacency_matrix) # generate networkx graph
     labels = {key: key+1 for key in xrange(n_vertices)} # vertices numbers
