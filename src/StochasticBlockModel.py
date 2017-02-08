@@ -5,10 +5,10 @@
   Created:  01/02/2017
 """
 from time import clock
+import sys
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
-import sys
 
 ########################################################################
 class SBM:
@@ -76,7 +76,7 @@ if __name__ == '__main__':
 
     #----------------------------------------------------------------------
     # Stochastic block model parameters
-    n_vertices = 1000  # number of vertices
+    n_vertices = 100  # number of vertices
     n_communities = 2  # number of communities
 
     # Fixing cin > cout is referred to as the assortative case, because vertices
@@ -99,10 +99,10 @@ if __name__ == '__main__':
         print("Community C{}, n{} = {} vertices, color: {}, E[di] = {}".format(str(i), i, sbm.n_per_community[i], color_map[i], sbm.expected_degrees[i]))
 
     if n_vertices > 100:
-        print("graphe trop grand pour être affiché, fin du programme")
-        sys.exit(0) # Can't draw if number of vertices is too big
-    G = nx.from_numpy_matrix(sbm.adjacency_matrix) # generate networkx graph
-    labels = {key: key+1 for key in xrange(n_vertices)} # vertices numbers
-    node_color = color_map[sbm.community_labels]
-    nx.draw(G, labels=labels, node_color=node_color, font_size=12)
-    plt.show()
+        print("Can't draw if number of vertices is too big")
+    else:
+        G = nx.from_numpy_matrix(sbm.adjacency_matrix) # generate networkx graph
+        labels = {key: key+1 for key in xrange(n_vertices)} # vertices numbers
+        node_color = color_map[sbm.community_labels]
+        nx.draw(G, labels=labels, node_color=node_color, font_size=12)
+        plt.show()
