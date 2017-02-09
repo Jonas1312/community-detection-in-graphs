@@ -92,7 +92,6 @@ if __name__ == '__main__':
 
     #----------------------------------------------------------------------
     # Draw generated graph and print communities
-
     color_map = np.array(['cyan', 'red', 'yellow', 'magenta', 'blue', 'green', 'white'][:n_communities])
     for i in xrange(n_communities):
         indices = [j+1 for j, x in enumerate(sbm.community_labels) if x == i]
