@@ -37,7 +37,7 @@ def LaplacianMatrix_2(matrix):
     :return: np.array (Laplacian matrix)
     """
     d = np.sum(matrix, axis=0)
-    return np.identity(len(d)) - np.inv(np.diag(d))*matrix
+    return np.identity(len(d)) - np.linalg.inv(np.diag(d))*matrix
 
 # ----------------------------------------------------------------------
 def ModularityMatrix(matrix):

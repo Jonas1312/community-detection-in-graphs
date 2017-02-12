@@ -19,7 +19,7 @@ def main():
 	# Stochastic block model parameters
 	#----------------------------------------------------------------------
 	n_vertices = 1000  # number of vertices
-	n_communities = 2  # number of communities
+	n_communities = 3  # number of communities
 
 	# Fixing cin > cout is referred to as the assortative case, because vertices
 	# from the same group connect with higher probability than with vertices from
