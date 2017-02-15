@@ -19,7 +19,7 @@ def main():
 	# Stochastic block model parameters
 	#----------------------------------------------------------------------
 	n_vertices = 1000  # number of vertices
-	n_communities = 3  # number of communities
+	n_communities = 2  # number of communities
 
 	# Fixing cin > cout is referred to as the assortative case, because vertices
 	# from the same group connect with higher probability than with vertices from
@@ -49,9 +49,11 @@ def main():
 		nx.draw(G, labels=labels, node_color=node_color, font_size=12)
 		plt.show()
 
-	eigvals, eigvects = np.linalg.eig(BetheHessian(sbm.adjacency_matrix))
+	eigvals, eigvects = np.linalg.eig(ModularityMatrix(sbm.adjacency_matrix)) # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
 	plt.hist(eigvals, bins=100)
 	plt.show()
+
+	indices = eigvals.argsort()[:2] # find the two smallest eigenvalues indices
 
 	##----------------------------------------------------------------------
 	## Comparison between sparse and dense graphs
