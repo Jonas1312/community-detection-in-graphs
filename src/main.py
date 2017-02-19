@@ -6,19 +6,19 @@
 """
 
 import networkx as nx
-import matplotlib.pyplot as plt
-from matrices import *
-import spectralClustering
-from stochasticBlockModel import SBM
 import numpy as np
+import matplotlib.pyplot as plt
+import spectralClustering
+from matrices import *
+from stochasticBlockModel import SBM
+from sklearn.cluster import KMeans
 
 #----------------------------------------------------------------------
 def main():
-	fig = plt.figure()
 	#----------------------------------------------------------------------
 	# Stochastic block model parameters
 	#----------------------------------------------------------------------
-	n_vertices = 300  # number of vertices
+	n_vertices = 10  # number of vertices
 	n_communities = 2  # number of communities
 
 	# Fixing cin > cout is referred to as the assortative case, because vertices
@@ -40,27 +40,41 @@ def main():
 		indices = [j+1 for j, x in enumerate(sbm.community_labels) if x == i]
 		print("Community C{}, n{} = {} vertices, color: {}, E[di] = {}".format(str(i), i, sbm.n_per_community[i], color_map[i], sbm.expected_degrees[i]))
 
-	if n_vertices > 100:
-		print("Can't draw if number of vertices is too big")
+	if n_vertices > 300: print("Can't draw if number of vertices is too big")
 	else:
 		G = nx.from_numpy_matrix(sbm.adjacency_matrix) # generate networkx graph
 		labels = {key: key+1 for key in xrange(n_vertices)} # vertices numbers
 		node_color = color_map[sbm.community_labels]
-		plt.title("Generated graph using Stochastic block model")
+		plt.title("Generated graph using Stochastic block model\n{} nodes and {} communities".format(n_vertices, n_communities))
 		nx.draw(G, labels=labels, node_color=node_color, font_size=10)
 		plt.figure()
 
 	#----------------------------------------------------------------------
 	# Spectral clustering
 	#----------------------------------------------------------------------
+	n_clusters = 2
 	eigvals, eigvects = np.linalg.eig(BetheHessian(sbm.adjacency_matrix)) # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
-	plt.title("Eigenvalues histogram")
+	plt.title("Histogram of Bethe Hessian matrix eigenvalues")
 	plt.hist(eigvals, bins=100) # plot histogram
 
-	indices = eigvals.argsort()[:2] # find the two smallest eigenvalues indices
+	indices = eigvals.argsort()[:n_clusters] # find the two smallest eigenvalues indices
+	W = np.column_stack((eigvects[:,indices[0]], eigvects[:,indices[1]]))
 	plt.figure()
 	plt.title("Eigenvectors corresponding to the two smallest eigenvalues")
-	plt.plot(eigvects[:,indices[0]], eigvects[:,indices[1]], 'ro', markersize=4)
+	plt.plot(W[:,0], W[:,1], 'o', markersize=5)
+
+	kmeans = KMeans(n_clusters=n_clusters).fit(W) # kmeans
+	plt.figure()
+	plt.title("K-means")
+	for i in xrange(n_clusters):
+		ds = W[np.where(kmeans.labels_ == i)]
+		plt.plot(ds[:,0], ds[:,1], 'o', markersize=5)
+
+	if n_vertices > 300: print("Can't draw if number of vertices is too big")
+	else:
+		plt.figure()
+		plt.title("Detected communities with the Bethe Hessian matrix")
+		nx.draw(G, labels=labels, node_color=color_map[kmeans.labels_], font_size=10)
 	plt.show()
 
 	##----------------------------------------------------------------------
