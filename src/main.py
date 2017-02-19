@@ -14,12 +14,12 @@ import numpy as np
 
 #----------------------------------------------------------------------
 def main():
-
+	fig = plt.figure()
 	#----------------------------------------------------------------------
 	# Stochastic block model parameters
 	#----------------------------------------------------------------------
-	n_vertices = 1000  # number of vertices
-	n_communities = 3  # number of communities
+	n_vertices = 300  # number of vertices
+	n_communities = 2  # number of communities
 
 	# Fixing cin > cout is referred to as the assortative case, because vertices
 	# from the same group connect with higher probability than with vertices from
@@ -46,11 +46,21 @@ def main():
 		G = nx.from_numpy_matrix(sbm.adjacency_matrix) # generate networkx graph
 		labels = {key: key+1 for key in xrange(n_vertices)} # vertices numbers
 		node_color = color_map[sbm.community_labels]
-		nx.draw(G, labels=labels, node_color=node_color, font_size=12)
-		plt.show()
+		plt.title("Generated graph using Stochastic block model")
+		nx.draw(G, labels=labels, node_color=node_color, font_size=10)
+		plt.figure()
 
-	eigvals, eigvects = np.linalg.eig(BetheHessian(sbm.adjacency_matrix))
-	plt.hist(eigvals, bins=100)
+	#----------------------------------------------------------------------
+	# Spectral clustering
+	#----------------------------------------------------------------------
+	eigvals, eigvects = np.linalg.eig(BetheHessian(sbm.adjacency_matrix)) # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
+	plt.title("Eigenvalues histogram")
+	plt.hist(eigvals, bins=100) # plot histogram
+
+	indices = eigvals.argsort()[:2] # find the two smallest eigenvalues indices
+	plt.figure()
+	plt.title("Eigenvectors corresponding to the two smallest eigenvalues")
+	plt.plot(eigvects[:,indices[0]], eigvects[:,indices[1]], 'ro', markersize=4)
 	plt.show()
 
 	##----------------------------------------------------------------------
