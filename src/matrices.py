@@ -11,16 +11,6 @@ import numpy as np
 # ----------------------------------------------------------------------
 def LaplacianMatrix(adjacency_matrix):
     """
-    Return the Laplacian Matrix of a given graph
-    :param matrix: np.array symetric square matrix
-    :return: np.array (Laplacian matrix)
-    """
-    d = np.sum(adjacency_matrix, axis=0)
-    return (np.diag(d) - adjacency_matrix)
-
-# ----------------------------------------------------------------------
-def LaplacianMatrix_1(adjacency_matrix):
-    """
     Return the symmetric normalized Laplacian matrix of a given graph
     :param matrix: np.array symetric square matrix
     :return: np.array square matrix
@@ -28,16 +18,6 @@ def LaplacianMatrix_1(adjacency_matrix):
     d = np.sum(adjacency_matrix, axis=0)
     D_inv_square_root = linalg.fractional_matrix_power(np.diag(d), -0.5)
     return np.identity(len(d)) - np.dot(np.dot(D_inv_square_root, adjacency_matrix), D_inv_square_root)
-
-# ----------------------------------------------------------------------
-def LaplacianMatrix_2(adjacency_matrix):
-    """
-    Return the random-walk normalized Laplacian matrix of a given graph
-    :param matrix: np.array symetric square matrix
-    :return: np.array (Laplacian matrix)
-    """
-    d = np.sum(adjacency_matrix, axis=0)
-    return np.identity(len(d)) - np.linalg.inv(np.diag(d))*adjacency_matrix
 
 # ----------------------------------------------------------------------
 def ModularityMatrix(adjacency_matrix):
