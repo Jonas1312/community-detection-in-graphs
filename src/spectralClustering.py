@@ -16,6 +16,18 @@ import networkx as nx
 
 
 def Kmeans_methode(eigvals,eigvects,G,n_vertices,labels,color_map,usedMatrix):
+    '''
+    Plot the histogram of eig values, the eigen vectors corresponding to the two smallest eigenvalues
+    and networkx graph of communities computed with Kmeans
+    :param eigvals: numpy vector
+    :param eigvects: numpy matrix
+    :param G: networx graph
+    :param n_vertices: int
+    :param labels: labels of vertices
+    :param color_map: colors for communities
+    :param usedMatrix: string (name of the matrix)
+    :return:
+    '''
     plt.title("Histogram of {} eigenvalues".format(usedMatrix))
     n_clusters = 2
     plt.hist(eigvals, bins=100)  # plot histogram
@@ -43,6 +55,43 @@ def Kmeans_methode(eigvals,eigvects,G,n_vertices,labels,color_map,usedMatrix):
 
 
 def spectralClustering_ModularityMatrix(adjacency_matrix,G,n_vertices,labels,color_map):
+    """
+    Compute the eig values and eig vectors of the modularity matrix and execute Kmeans_methode
+    :param adjacency_matrix: numpy matrix
+    :param G: networkx graph
+    :param n_vertices: int
+    :param labels: labels of vertices
+    :param color_map: colors of communities
+    :return:
+    """
     eigvals, eigvects = np.linalg.eig(ModularityMatrix(
         adjacency_matrix))  # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
     Kmeans_methode(eigvals,eigvects,G,n_vertices,labels,color_map,'Modularity Matrix')
+
+def spectralClustering_LaplacianMatrix(adjacency_matrix,G,n_vertices,labels,color_map):
+    """
+    Compute the eig values and eig vectors of the Laplacian matrix and execute Kmeans_methode
+    :param adjacency_matrix: numpy matrix
+    :param G: networkx graph
+    :param n_vertices: int
+    :param labels: labels of vertices
+    :param color_map: colors of communities
+    :return:
+    """
+    eigvals, eigvects = np.linalg.eig(LaplacianMatrix(
+        adjacency_matrix))  # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
+    Kmeans_methode(eigvals,eigvects,G,n_vertices,labels,color_map,'Laplacian Matrix')
+
+def spectralClustering_BetheHessianMatrix(adjacency_matrix,G,n_vertices,labels,color_map):
+    """
+    Compute the eig values and eig vectors of the Bethe-Hessian matrix and execute Kmeans_methode
+    :param adjacency_matrix: numpy matrix
+    :param G: networkx graph
+    :param n_vertices: int
+    :param labels: labels of vertices
+    :param color_map: colors of communities
+    :return:
+    """
+    eigvals, eigvects = np.linalg.eig(BetheHessian(
+        adjacency_matrix))  # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
+    Kmeans_methode(eigvals,eigvects,G,n_vertices,labels,color_map,'Bethe-Hessian Matrix')

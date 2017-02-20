@@ -56,8 +56,11 @@ def main():
 
 ##----------------------------------------------------------------------
 ## spectralClustering
+## (choose one of the 3 fonctions)
 ##----------------------------------------------------------------------
     spectralClustering.spectralClustering_ModularityMatrix(sbm.adjacency_matrix,G,n_vertices,labels,color_map)
+#    spectralClustering.spectralClustering_LaplacianMatrix(sbm.adjacency_matrix,G, n_vertices, labels,color_map)
+#    spectralClustering.spectralClustering_BetheHessianMatrix(sbm.adjacency_matrix,G, n_vertices, labels,color_map)
 
 
 ##----------------------------------------------------------------------
