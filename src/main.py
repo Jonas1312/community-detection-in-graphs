@@ -18,7 +18,7 @@ def main():
 	#----------------------------------------------------------------------
 	# Stochastic block model parameters
 	#----------------------------------------------------------------------
-	n_vertices = 10  # number of vertices
+	n_vertices = 30  # number of vertices
 	n_communities = 2  # number of communities
 
 	# Fixing cin > cout is referred to as the assortative case, because vertices
@@ -27,7 +27,7 @@ def main():
 	# is that any tractable algorithm will only detect communities if
 	# abs(cin - cout) > n_communities*sqrt(c), where c is the average degree.
 	cin = 15
-	cout = 1
+	cout = 6
 	probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout, dtype=int) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities
 	sbm = SBM(n_vertices, n_communities, probability_matrix)
 	print("Average degree: " + str(sbm.average_degree))
@@ -53,7 +53,7 @@ def main():
 	# Spectral clustering
 	#----------------------------------------------------------------------
 	n_clusters = 2
-	eigvals, eigvects = np.linalg.eig(BetheHessian(sbm.adjacency_matrix)) # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
+	eigvals, eigvects = np.linalg.eig(ModularityMatrix(sbm.adjacency_matrix)) # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
 	plt.title("Histogram of Bethe Hessian matrix eigenvalues")
 	plt.hist(eigvals, bins=100) # plot histogram
 
@@ -68,13 +68,13 @@ def main():
 	plt.title("K-means")
 	for i in xrange(n_clusters):
 		ds = W[np.where(kmeans.labels_ == i)]
-		plt.plot(ds[:,0], ds[:,1], 'o', markersize=5)
+		plt.plot(ds[:,0], ds[:,1], color=color_map[i], marker='o', markersize=5, ls='')
 
 	if n_vertices > 300: print("Can't draw if number of vertices is too big")
 	else:
 		plt.figure()
 		plt.title("Detected communities with the Bethe Hessian matrix")
-		nx.draw(G, labels=labels, node_color=color_map[kmeans.labels_], font_size=10)
+		nx.draw(G, labels=labels, node_color=color_map[~kmeans.labels_], font_size=10)
 	plt.show()
 
 	##----------------------------------------------------------------------
