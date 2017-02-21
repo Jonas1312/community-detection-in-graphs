@@ -28,13 +28,13 @@ class SBM:
         self.probability_matrix = probability_matrix # matrix of edge probabilities
         self.community_labels = np.random.randint(low=0, high=self.n_communities, size=self.n_vertices, dtype=np.uint8) # community label assigned to each vertex
         self.n_per_community = [len(np.argwhere(self.community_labels == i)) for i in xrange(self.n_communities)] # number of vertices per community (n1, n2, ..., nk)
-        self.adjacency_matrix = self.ajacencyMatrix() # generate adjacency matrix from the Stochastic block model
+        self.adjacency_matrix = self.GenerateAjacencyMatrix() # generate adjacency matrix from the Stochastic block model
         self.expected_degrees = np.dot(self.probability_matrix, self.n_per_community) # degrees expectations [E(d1), E(d2), ..., E(dk)]
         self.degrees_vector = np.sum(self.adjacency_matrix, axis=0) # d[i] is the degree of each node i
         self.average_degree = np.mean(self.degrees_vector)
 
     #----------------------------------------------------------------------
-    def ajacencyMatrix(self):
+    def GenerateAjacencyMatrix(self):
         """
         Generate adajcency matrix
         :return: np.array

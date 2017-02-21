@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# coding:utf-8
+#coding:utf-8
 """
   Purpose:  Matrices
   Created:  05/02/2017
@@ -7,6 +7,8 @@
 
 import scipy.linalg as linalg
 import numpy as np
+import types
+import sys
 
 # ----------------------------------------------------------------------
 def LaplacianMatrix(adjacency_matrix):
@@ -42,3 +44,7 @@ def BetheHessian(adjacency_matrix, r=None):
     if r is None:
         r = np.sqrt(np.mean(d))
     return (r**2 - 1)*np.identity(len(d)) - r*adjacency_matrix + np.diag(d)
+
+
+dic = sys.modules[__name__].__dict__.copy()
+matrices_list = [(name, func) for (name, func) in dic.iteritems() if type(func) == types.FunctionType]
