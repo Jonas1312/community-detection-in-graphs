@@ -16,5 +16,3 @@ def SpectralClustering(n_clusters, matrix):
 	W = eigvects[:,indices]
 	kmeans = KMeans(n_clusters=n_clusters).fit(W) # kmeans
 	return kmeans.labels_, eigvals, eigvects, W
-
-

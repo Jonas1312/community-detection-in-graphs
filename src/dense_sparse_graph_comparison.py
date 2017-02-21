@@ -35,7 +35,3 @@ plt.plot(x,y_sparse, 'r', label="sparse")
 plt.plot(x,y_dense, 'b', label="dense")
 plt.legend(loc='upper left')
 plt.show()
-
-
-if __name__ == '__main__':
-	main()

@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 from spectralClustering import SpectralClustering
 from matrices import *
 from stochasticBlockModel import SBM
-from sklearn.cluster import KMeans
 
 PLOT_MAX_NODES = 100
 
