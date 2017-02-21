@@ -74,7 +74,7 @@ def main():
     else:
         plt.figure()
         plt.title("Detected communities with the Bethe Hessian matrix")
-        nx.draw(G, labels=labels, node_color=color_map[~spectral_labels], font_size=10)
+        nx.draw(G, labels=labels, node_color=color_map[spectral_labels], font_size=10)
     plt.show()
 
 
