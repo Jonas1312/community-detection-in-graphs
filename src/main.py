@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from spectralClustering import SpectralClustering
 from matrices import *
 from stochasticBlockModel import SBM
+from testMethode import *
 
 PLOT_MAX_NODES = 100
 
@@ -55,6 +56,7 @@ def main():
     #----------------------------------------------------------------------
     n_clusters = 2
     spectral_labels, eigvals, eigvects, W = SpectralClustering(n_clusters, BetheHessian(sbm.adjacency_matrix)) # spectral clustering
+    test_equality_communities(sbm.community_labels,spectral_labels,n_communities)
 
     # Eigenvalues and eigenvectors
     plt.title("Histogram of Bethe Hessian matrix eigenvalues")
