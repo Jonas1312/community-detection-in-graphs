@@ -12,7 +12,7 @@ from spectralClustering import SpectralClustering
 from matrices import *
 from stochasticBlockModel import SBM
 from testMethode import *
-from test import *
+
 
 PLOT_MAX_NODES = 100
 
