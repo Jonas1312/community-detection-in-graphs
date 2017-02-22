@@ -12,6 +12,7 @@ from spectralClustering import SpectralClustering
 from matrices import *
 from stochasticBlockModel import SBM
 from testMethode import *
+from test import *
 
 PLOT_MAX_NODES = 100
 
@@ -20,8 +21,8 @@ def main():
     #----------------------------------------------------------------------
     # Stochastic block model parameters
     #----------------------------------------------------------------------
-    n_vertices = 10  # number of vertices
-    n_communities = 2  # number of communities
+    n_vertices = 100  # number of vertices
+    n_communities = 5  # number of communities
 
     # Fixing cin > cout is referred to as the assortative case, because vertices
     # from the same group connect with higher probability than with vertices from
@@ -54,9 +55,9 @@ def main():
     #----------------------------------------------------------------------
     # Spectral clustering
     #----------------------------------------------------------------------
-    n_clusters = 2
+    n_clusters = 5
     spectral_labels, eigvals, eigvects, W = SpectralClustering(n_clusters, BetheHessian(sbm.adjacency_matrix)) # spectral clustering
-    test_equality_communities(sbm.community_labels,spectral_labels,n_communities)
+    test_methode(sbm.community_labels,spectral_labels,n_communities, n_vertices)
 
     # Eigenvalues and eigenvectors
     plt.title("Histogram of Bethe Hessian matrix eigenvalues")
