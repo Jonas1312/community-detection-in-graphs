@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 #coding:utf-8
 """
-  Purpose:
+  Purpose:  Génération des permutations d'un ensemble fini
   Created:  22/02/2017
 """
 # génération des permutations d'un ensemble fini
 # par un procédé itératif utilisant les générateurs de python
-# inspiré par code trouvé sur https://www.developpez.net/forums/d228599/general-developpement/algorithme-mathematiques/contribuez/faq-determination-combinaisons/#post1462943
+# https://www.developpez.net/forums/d228599/general-developpement/algorithme-mathematiques/contribuez/faq-determination-combinaisons/#post1462943
 # complexité en O(n_communities!) : convient pour un faible nombre de communautés
 
 import numpy as np
@@ -19,7 +19,7 @@ def ins(X, i, L):
 
 def turn(X, L):
     """Fait tourner X dans L à toutes les positions"""
-    return [ins(X, i, L) for i in range(0, len(L) + 1)]
+    return [ins(X, i, L) for i in xrange(0, len(L) + 1)]
 
 def permutations():
     """Générateur de permutations"""
@@ -31,12 +31,14 @@ def permutations():
         P = reduce(lambda x, y: x + y, Q)  # concaténation à répétition
         yield P  # stoppe l'exécution pour la reprendre à cet endroit précis
 
-def test_methode(communities_label_1, communities_label_2, n_communities, n_vertices):
+def permutation_calculator(communities_label_1, communities_label_2, n_communities):
+    if len(communities_label_1) != len(communities_label_2):
+        raise ValueError("communities_label_1 and communities_label_2 should be the same size")
     nb_common_vertices = np.array([])
     Perm = permutations()
     for i in range(0, n_communities+1):  # permutations d'un ensemble à n_communities éléments
         X = Perm.next()
     for permutation in X:
-        communities_label_2_permuted = np.array([permutation[communities_label_2[i]]-1 for i in xrange(n_vertices)])
+        communities_label_2_permuted = np.array([permutation[communities_label_2[i]]-1 for i in xrange(len(communities_label_1))])
         nb_common_vertices = np.append(nb_common_vertices, ((communities_label_1 == communities_label_2_permuted).sum()))
-    print('{} well put vertices ({} vertices)'.format(nb_common_vertices.max(), n_vertices))
+    return nb_common_vertices.max()
