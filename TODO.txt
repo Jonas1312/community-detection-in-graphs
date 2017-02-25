@@ -4,6 +4,7 @@ Faire des benchmarks:
     - tester les différentes matrices avec différents nombres de communautés/noeuds/(cin - cout)
     - faire des moyennes des résultats pour chaque benchmarks (3 ou 5)
     - tester sur des vrais graphes
+    - Monter que Bethe hessian marche mieux que laplacian matrix sur les réseaux sparses
     
 Autre méthode pour la BetheHessian ? voir dernière page du papier : "Statistical Physics of Community Detection"
 
