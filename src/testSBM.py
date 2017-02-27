@@ -11,7 +11,7 @@ cout = 5
 n_communities = 2  # number of communities
 
 
-n_vertices_test = [100 * n for n in xrange(1,25)]# number of vertices
+n_vertices_test = [100 * n for n in xrange(1,26)]# number of vertices
 times_test = []
 
 for n_vertices in n_vertices_test:
