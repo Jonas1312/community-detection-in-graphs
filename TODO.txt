@@ -1,15 +1,15 @@
 Faire des benchmarks:
-    - tester les perfs de notre implémentation du SBM (compléxité)
+    - tester les perfs de notre implï¿½mentation du SBM (complï¿½xitï¿½) --> DONE (testSBM.py)
     - tester plusieurs "r" de la matrice Bethe Hessian
-    - tester les différentes matrices avec différents nombres de communautés/noeuds/(cin - cout)
-    - faire des moyennes des résultats pour chaque benchmarks (3 ou 5)
+    - tester les diffï¿½rentes matrices avec diffï¿½rents nombres de communautï¿½s/noeuds/(cin - cout)
+    - faire des moyennes des rï¿½sultats pour chaque benchmarks (3 ou 5)
     - tester sur des vrais graphes
-    - Monter que Bethe hessian marche mieux que laplacian matrix sur les réseaux sparses
+    - Monter que Bethe hessian marche mieux que laplacian matrix sur les rï¿½seaux sparses
     
-Autre méthode pour la BetheHessian ? voir dernière page du papier : "Statistical Physics of Community Detection"
+Autre mï¿½thode pour la BetheHessian ? voir derniï¿½re page du papier : "Statistical Physics of Community Detection"
 
 Comment mesurer l'accuracy du spectral clustering ?
-    - générateur de permutations pour calculer l'erreur (déjà fait)
+    - gï¿½nï¿½rateur de permutations pour calculer l'erreur (dï¿½jï¿½ fait)
     - utiliser la normalized mutual information, voir papier : "Statistical Physics of Community, http://scikit-learn.org/stable/modules/generated/sklearn.metrics.mutual_info_score.html, http://igraph.org/python/doc/igraph.clustering-module.html#compare_communities
     
-Comment choisir n_clusters si on ne connaît pas n_communities ? (hors projet ?)
+Comment choisir n_clusters si on ne connaï¿½t pas n_communities ? (hors projet ?)
