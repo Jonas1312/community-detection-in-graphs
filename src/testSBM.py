@@ -18,7 +18,7 @@ cout = 5
 n_communities = 2  # number of communities
 
 
-n_vertices_test = [100 * n for n in xrange(1,15)]  # number of vertices for time measures
+n_vertices_test = range(100,1500,100)  # number of vertices for time measures
 times_test = []
 
 for n_vertices in n_vertices_test:
@@ -26,16 +26,14 @@ for n_vertices in n_vertices_test:
         [cin - cout] * n_communities))  # matrix of edge probabilities
     time1 = clock()  # start time measure
     sbm = SBM(n_vertices, n_communities, probability_matrix)
-    time2 = clock()  # end time measure
-    times_test.append([n_vertices,(time2-time1)])
+    times_test.append((n_vertices, (clock() - time1)))
 
 plt.plot(*zip(*times_test))
-plt.title('number of vertices dependence of execution time')
+plt.title('Generation time = f(Number of vertices)')
 plt.show()
 
 # Save execution time in csv file
 csvfile = "..\execution_time.csv"
-
 
 with open(csvfile, "w") as output:
     writer = csv.writer(output, lineterminator='\n')

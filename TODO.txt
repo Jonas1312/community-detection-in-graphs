@@ -6,7 +6,7 @@
     - tester sur des vrais graphes
     - Montrer que Bethe hessian marche mieux que laplacian matrix sur les réseaux sparses
     
-Autre méthode pour la BetheHessian ? voir derniére page du papier : "Statistical Physics of Community Detection"
+Autre méthode pour la BetheHessian ? voir dernière page du papier : "Statistical Physics of Community Detection"
 
 Comment mesurer l'accuracy du spectral clustering ?
     - générateur de permutations pour calculer l'erreur (déjà fait)

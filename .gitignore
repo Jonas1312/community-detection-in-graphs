@@ -1,6 +1,7 @@
 
 # Created by https://www.gitignore.io/api/python,matlab,microsoftoffice,pycharm
 
+execution_time.csv
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
