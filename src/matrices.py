@@ -28,8 +28,8 @@ def ModularityMatrix(adjacency_matrix):
     :param matrix: np.array symetric square matrix
     :return: np.array square matrix
     """
-    d = np.sum(adjacency_matrix, axis=0)
-    return adjacency_matrix - (np.dot(d, d.T) / np.sum(d))
+    d = np.matrix(np.sum(adjacency_matrix, axis=0))
+    return adjacency_matrix - (np.dot(d.T, d).astype(float) / np.sum(d))
 
 # ----------------------------------------------------------------------
 def BetheHessian(adjacency_matrix, r=None):
