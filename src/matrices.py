@@ -33,7 +33,6 @@ def ModularityMatrix(adjacency_matrix):
 
 # ----------------------------------------------------------------------
 def BetheHessian(adjacency_matrix, r=None):
-    # type: (object, object) -> object
     """
     Return the Bethe Hessian matrix of a given graph.
     By default r = sqrt(sum(di)/n)

@@ -28,7 +28,7 @@ def main():
     # cout > cin is called the disassortative case
     cin = 15
     cout = 5
-    probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout, dtype=int) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities (to generate a sparse graph)
+    probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities (to generate a sparse graph)
     sbm = SBM(n_vertices, n_communities, probability_matrix)
     print("Average degree: {}, abs(cin - cout): {}, n_commuties*sqrt(c): {}".format(sbm.average_degree, abs(cin-cout), n_communities*np.sqrt(sbm.average_degree)))
 
