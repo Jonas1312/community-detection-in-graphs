@@ -1,5 +1,4 @@
 ﻿Faire des benchmarks:
     - tester les différentes matrices avec différents nombres de communautés/noeuds/(cin - cout)
     - tester sur des vrais graphes
-    - Montrer que Bethe hessian marche mieux sur les réseaux sparses
     - si c'est un réseau dense quelle matrice fonctionne le mieux ?
