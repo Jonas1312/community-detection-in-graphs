@@ -26,8 +26,8 @@ for i in x: # sparse graph
 for i in x: # dense graph
 	n_vertices = i  # number of vertices
 	n_communities = 2  # number of communities
-	cin = 0.7
-	cout = 0.3
+	cin = 13
+	cout = 3
 	probability_matrix = np.full((n_communities,n_communities), cout, dtype=int) + np.diag([cin-cout]*n_communities)
 	sbm = SBM(n_vertices, n_communities, probability_matrix)
 	y_dense.append(sbm.average_degree)
