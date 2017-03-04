@@ -1,19 +1,5 @@
 ﻿Faire des benchmarks:
-    - tester les perfs de notre implémentation du SBM (compléxité) --> DONE (testSBM.py)
-    - tester plusieurs "r" de la matrice Bethe Hessian
     - tester les différentes matrices avec différents nombres de communautés/noeuds/(cin - cout)
-    - faire des moyennes des résultats pour chaque benchmarks (3 ou 5)
     - tester sur des vrais graphes
-    - Montrer que Bethe hessian marche mieux que laplacian matrix sur les réseaux sparses
-    
-Autre méthode pour la BetheHessian ? voir dernière page du papier : "Statistical Physics of Community Detection"
-
-Comment mesurer l'accuracy du spectral clustering ?
-    - générateur de permutations pour calculer l'erreur (déjà fait)
-    - utiliser la normalized mutual information, voir papier : "Statistical Physics of Community
-    - http://scikit-learn.org/stable/modules/generated/sklearn.metrics.mutual_info_score.html
-    - http://igraph.org/python/doc/igraph.clustering-module.html#compare_communities
-    
-Comment choisir n_clusters si on ne connait pas n_communities ? (hors projet ?)
-
-Faire une méthode pour lire/écrire un graphe sbm dans un fichier
+    - Montrer que Bethe hessian marche mieux sur les réseaux sparses
+    - si c'est un réseau dense quelle matrice fonctionne le mieux ?

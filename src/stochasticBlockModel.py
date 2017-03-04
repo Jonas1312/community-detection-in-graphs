@@ -49,6 +49,6 @@ class SBM:
                     graph_matrix[i][j] = 1
 
         graph_matrix += graph_matrix.T # symmetric as graph is undirected
-        print("Time taken to generate the graph: " + str((clock() - t0)*1000) + "ms")
-        print("Graph size in memory: " + str(sys.getsizeof(graph_matrix)/1024) + "ko")
+        #print("Time taken to generate the graph: " + str((clock() - t0)*1000) + "ms")
+        #print("Graph size in memory: " + str(sys.getsizeof(graph_matrix)/1024) + "ko")
         return graph_matrix
