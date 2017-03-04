@@ -44,6 +44,7 @@ for i in x:  # dense graph
 
 
 plt.xlim(0, x[-1])
+plt.title("Test of Bethe-Hessian matrix with sparse and dense adjacency matrix")
 plt.xlabel("Number of vertices")
 plt.ylabel("Normalized Mutual Information Score")
 plt.plot(x, y_sparse, 'r', label="sparse")
