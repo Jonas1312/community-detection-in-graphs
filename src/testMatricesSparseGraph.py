@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 """
-  Purpose:  Test differents matices for dense graph
+  Purpose:  Test differents matices for sparse graph
   Created:  04/03/2017
 """
 
@@ -17,12 +17,12 @@ y_modularity = []
 y_laplacian = []
 
 n_communities = 2
-cin = 0.6
-cout = 0.4
+cin = 15
+cout = 5
 
 for i in x:  # dense graph
     n_vertices = i  # number of vertices
-    probability_matrix = np.full((n_communities, n_communities), cout) + np.diag([cin - cout] * n_communities)
+    probability_matrix = (1.0 / n_vertices) * (np.full((n_communities, n_communities), cout) + np.diag([cin - cout] * n_communities))
     sbm = SBM(n_vertices, n_communities, probability_matrix)
     spectral_labels, eigvals, eigvects, W = SpectralClustering(n_communities, BetheHessian(sbm.adjacency_matrix),"BetheHessian")  # spectral clustering
     nmi = normalized_mutual_info_score(sbm.community_labels, spectral_labels)
@@ -36,7 +36,7 @@ for i in x:  # dense graph
 
 
 plt.xlim(0, x[-1])
-plt.title("Spectral clustering of a dense graph with several matrices")
+plt.title("Spectral clustering of a sparse graph with several matrices")
 plt.xlabel("Number of vertices")
 plt.ylabel("Normalized Mutual Information Score")
 plt.plot(x, y_bethehessian, 'r', label="Bethe-Hessian")
