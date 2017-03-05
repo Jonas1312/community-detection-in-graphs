@@ -14,7 +14,7 @@ def SpectralClustering(n_clusters, matrix, matrix_name):
     eigvals, eigvects = np.linalg.eig(matrix) # eigvects[:,i] is the eigenvector corresponding to the eigenvalue eigvals[i]
     if matrix_name in ["BetheHessian", "LaplacianMatrix"]:
         indices = eigvals.argsort()[:n_clusters] # find the 'n_clusters' isolated eigenvalues
-    elif matrix_name in ["ModularityMatrix"]:
+    elif matrix_name in ["ModularityMatrix", "AdjacencyMatrix"]:
         indices = eigvals.argsort()[-n_clusters:] # find the 'n_clusters' isolated eigenvalues
     else:
         raise ValueError("Unknown matrix name")

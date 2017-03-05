@@ -18,7 +18,7 @@ n_communities = 2  # number of communities
 # cin > cout is referred to as the assortative case
 # cout > cin is called the disassortative case
 cin = 15
-cout = 5
+cout = 6
 probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout, dtype=int) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities (to generate a sparse graph)
 sbm = SBM(n_vertices, n_communities, probability_matrix)
 
@@ -41,6 +41,7 @@ for i, r in enumerate(x_axis):
 	print("Normalized Mutual Information for r = {} : {}".format(r, str(nmi)))
 
 plt.figure(2)
+plt.ylim(0,1)
 plt.title("NMI = f(r)")
 plt.xlabel("r")
 plt.ylabel("NMI")
