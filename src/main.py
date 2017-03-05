@@ -21,13 +21,13 @@ def main():
     #----------------------------------------------------------------------
     # Stochastic block model parameters
     #----------------------------------------------------------------------
-    n_vertices = 300  # number of vertices
+    n_vertices = 100  # number of vertices
     n_communities = 2  # number of communities
 
     # cin > cout is referred to as the assortative case
     # cout > cin is called the disassortative case
     cin = 15
-    cout = 5
+    cout = 7
     probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities (to generate a sparse graph)
     sbm = SBM(n_vertices, n_communities, probability_matrix)
     print("Average degree: {}, abs(cin - cout): {}, n_commuties*sqrt(c): {}".format(sbm.average_degree, abs(cin-cout), n_communities*np.sqrt(sbm.average_degree)))
@@ -64,21 +64,20 @@ def main():
     if n_vertices <= PLOT_MAX_NODES:
         plt.title("Histogram of matrix eigenvalues")
         plt.hist(eigvals, bins=100) # plot histogram of the eigenvalues
-        if n_clusters <= 2:
-            plt.figure()
-            plt.title("Eigenvectors corresponding to the {} smallest eigenvalues".format(n_clusters))
-            plt.plot(W[:,0], W[:,1], 'o', markersize=5) # plot eigenvectors corresponding to the 'n_clusters' smallest eigenvalues
+    if n_clusters <= 2:
+        plt.figure()
+        plt.title("Eigenvectors corresponding to the {} smallest eigenvalues".format(n_clusters))
+        plt.plot(W[:,0], W[:,1], 'o', markersize=5) # plot eigenvectors corresponding to the 'n_clusters' smallest eigenvalues
 
-            # Kmeans
-            plt.figure()
-            plt.title("Kmeans")
-            for i in xrange(n_clusters):
-                ds = W[np.where(spectral_labels == i)]
-                plt.plot(ds[:,0], ds[:,1], color=color_map[i], marker='o', markersize=5, ls='')
+        plt.figure()
+        plt.title("Kmeans")
+        for i in xrange(n_clusters):
+            ds = W[np.where(spectral_labels == i)]
+            plt.plot(ds[:,0], ds[:,1], color=color_map[i], marker='o', markersize=5, ls='')
 
     if n_vertices <= PLOT_MAX_NODES:
         plt.figure()
-        plt.title("Detected communities with the Bethe Hessian matrix")
+        plt.title("Detected communities")
         nx.draw(G, labels=labels, node_color=color_map[spectral_labels], font_size=10)
     plt.show()
     pass

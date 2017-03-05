@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from stochasticBlockModel import SBM
 
-x = range(5,200,25)
+x = range(5,150,25)
 y_sparse = []
 y_dense = []
 
