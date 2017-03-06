@@ -11,7 +11,7 @@ from matrices import *
 from sklearn.metrics.cluster import normalized_mutual_info_score
 from spectralClustering import SpectralClustering
 
-x_axis = range(20, 1500, 350)
+x_axis = range(20, 2220, 200)
 yNMI_bethehessian = [0]*len(x_axis)
 yNMI_modularity = [0]*len(x_axis)
 yNMI_laplacian = [0]*len(x_axis)
@@ -20,12 +20,12 @@ yNMI_adjacency = [0]*len(x_axis)
 n_communities = 2
 cin = 15
 cout = 6
-n_iterations = 1
+n_iterations = 3
 
 for _ in xrange(n_iterations):
     for i, n_vertices in enumerate(x_axis):
         print("Number of vertices: " + str(n_vertices))
-        probability_matrix = (1.0 / n_vertices) * (np.full((n_communities, n_communities), cout, dtype=int) + np.diag([cin - cout] * n_communities))
+        probability_matrix = (1.0 / n_vertices) * (np.full((n_communities, n_communities), cout) + np.diag([cin - cout] * n_communities))
         sbm = SBM(n_vertices, n_communities, probability_matrix)
 
         # BetheHessian matrix

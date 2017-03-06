@@ -12,10 +12,9 @@ from sklearn.metrics.cluster import normalized_mutual_info_score
 from spectralClustering import SpectralClustering
 
 n_vertices = 800
-x_step = 0.2
 cin = 15
 cout = 5
-x_axis = [i for i in range(1,6)]
+x_axis = range(1,6)
 yNMI_bethehessian = [0]*len(x_axis)
 yNMI_modularity = [0]*len(x_axis)
 yNMI_laplacian = [0]*len(x_axis)
@@ -55,7 +54,7 @@ plt.ylim(0,1)
 plt.xlabel("n_communities")
 plt.ylabel("Normalized Mutual Information Score")
 
-plt.plot([y/n_iterations for y in yNMI_bethehessian], 'r', label="Bethe-Hessian")
+plt.plot(x_axis, [y/n_iterations for y in yNMI_bethehessian], 'r', label="Bethe-Hessian")
 plt.plot(x_axis, [y/n_iterations for y in yNMI_modularity], 'b', label="Modularity")
 plt.plot(x_axis, [y/n_iterations for y in yNMI_laplacian], 'g', label="Laplacian")
 plt.plot(x_axis, [y/n_iterations for y in yNMI_adjacency], 'c', label="Adjacency")

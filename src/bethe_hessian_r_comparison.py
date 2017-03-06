@@ -19,7 +19,7 @@ n_communities = 2  # number of communities
 # cout > cin is called the disassortative case
 cin = 15
 cout = 6
-probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout, dtype=int) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities (to generate a sparse graph)
+probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities (to generate a sparse graph)
 sbm = SBM(n_vertices, n_communities, probability_matrix)
 
 best_r = np.sqrt(np.mean(sbm.average_degree))
