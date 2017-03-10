@@ -14,14 +14,16 @@ The stochastic block model takes the following parameters:
 * a symmetric r x r matrix P of edge probabilities.
 The edge set is then sampled at random as follows: any two vertices u in Ci and v in Cj are connected by an edge with probability Pij.
 
+## Bethe Hessian matrix
+[arXiv.org](https://arxiv.org/abs/1406.1880)
+
+## Spectral clustering
+[Wikipedia](https://en.wikipedia.org/wiki/Spectral_clustering)
+
+
 ## Requirements
   - Python 2.7
   - Networkx
   - Numpy
-  
-## Installation (Windows)
-Open command prompt in admin and type the commands:
-```cmd
-pip install numpy
-pip install networkx
-```
+  - Sklearn
+  - Scipy
