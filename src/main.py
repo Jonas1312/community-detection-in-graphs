@@ -21,7 +21,7 @@ def main():
     #----------------------------------------------------------------------
     # Stochastic block model parameters
     #----------------------------------------------------------------------
-    n_vertices = 20  # number of vertices
+    n_vertices = 1400  # number of vertices
     n_communities = 2  # number of communities
 
     # cin > cout is referred to as the assortative case
