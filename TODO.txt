@@ -1,3 +1,0 @@
-﻿Faire des benchmarks:
-    - tester les différentes matrices avec différents nombres de communautés/noeuds/(cin - cout)
-    - tester sur des vrais graphes
