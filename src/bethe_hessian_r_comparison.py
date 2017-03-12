@@ -12,7 +12,7 @@ from matrices import BetheHessian
 from stochasticBlockModel import SBM
 from sklearn.metrics.cluster import normalized_mutual_info_score
 
-n_vertices = 1000  # number of vertices
+n_vertices = 1500  # number of vertices
 n_communities = 2  # number of communities
 
 # cin > cout is referred to as the assortative case
@@ -25,7 +25,7 @@ sbm = SBM(n_vertices, n_communities, probability_matrix)
 best_r = np.sqrt(np.mean(sbm.average_degree))
 print("r = sqrt(average degree) =  " + str(best_r))
 
-x_axis = sorted([1, 2, 3, 3.5, 4, 6, 10, best_r])
+x_axis = sorted([1, 2, 3, 3.5, 4, 6, 15, best_r])
 y_axis = []
 
 plt.figure(1)
@@ -33,7 +33,7 @@ plt.figure(1)
 for i, r in enumerate(x_axis):
 	spectral_labels, eigvals, eigvects, W = SpectralClustering(n_communities, BetheHessian(sbm.adjacency_matrix, r), "BetheHessian") # spectral clustering
 	plt.subplot(2,4,i+1)
-	plt.title("Bethe Hessian eigenvalues with r = " + str(r))
+	plt.title("r = " + str(r))
 	plt.hist(eigvals, bins=100) # plot histogram of the eigenvalues
 	nmi = normalized_mutual_info_score(sbm.community_labels, spectral_labels)
 	if r == best_r: best_nmi = nmi
@@ -42,7 +42,7 @@ for i, r in enumerate(x_axis):
 
 plt.figure(2)
 plt.ylim(0,1)
-plt.title("NMI = f(r)")
+plt.title("NMI = f(r), cin = {}, cout = {}, n_vertices = {}".format(cin, cout, n_vertices))
 plt.xlabel("r")
 plt.ylabel("NMI")
 plt.plot(x_axis, y_axis)

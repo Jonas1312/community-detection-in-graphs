@@ -11,17 +11,16 @@ from matrices import *
 from sklearn.metrics.cluster import normalized_mutual_info_score
 from spectralClustering import SpectralClustering
 
-n_vertices = 800
+n_vertices = 1800
 cin = 15
 cout = 5
-x_axis = range(1,6)
+x_axis = range(2,6)
 yNMI_bethehessian = [0]*len(x_axis)
 yNMI_modularity = [0]*len(x_axis)
 yNMI_laplacian = [0]*len(x_axis)
 yNMI_adjacency = [0]*len(x_axis)
 
-
-n_iterations = 1
+n_iterations = 3
 
 for n in xrange(n_iterations):
 	print("Iteration {}, {} left".format(n+1, n_iterations-n-1))
