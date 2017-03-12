@@ -11,16 +11,16 @@ from matrices import *
 from sklearn.metrics.cluster import normalized_mutual_info_score
 from spectralClustering import SpectralClustering
 
-x_axis = range(20, 1500, 350)
+x_axis = range(20, 2000, 200)
 yNMI_bethehessian = [0]*len(x_axis)
 yNMI_modularity = [0]*len(x_axis)
 yNMI_laplacian = [0]*len(x_axis)
 yNMI_adjacency = [0]*len(x_axis)
 
-n_communities = 2
-cin = 0.7
-cout = 0.3
-n_iterations = 1
+n_communities = 3
+cin = 0.55
+cout = 0.45
+n_iterations = 3
 
 for _ in xrange(n_iterations):
     for i, n_vertices in enumerate(x_axis):
