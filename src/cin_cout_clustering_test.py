@@ -27,6 +27,7 @@ for n in xrange(n_iterations):
 	for i, (cin, cout) in enumerate(x_axis):
 		probability_matrix = (1.0 / n_vertices) * (np.full((n_communities, n_communities), cout) + np.diag([cin - cout] * n_communities))
 		sbm = SBM(n_vertices, n_communities, probability_matrix)
+		print(sbm.average_degree)
 
 		# BetheHessian matrix
 		print("BetheHessian")

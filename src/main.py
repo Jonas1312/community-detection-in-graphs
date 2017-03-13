@@ -21,7 +21,7 @@ def main():
     #----------------------------------------------------------------------
     # Stochastic block model parameters
     #----------------------------------------------------------------------
-    n_vertices = 1500  # number of vertices
+    n_vertices = 1700  # number of vertices
     n_communities = 2  # number of communities
 
     # cin > cout is referred to as the assortative case
@@ -69,7 +69,7 @@ def main():
         plt.plot(W[:,0], W[:,1], 'o', markersize=5) # plot eigenvectors corresponding to the 'n_clusters' smallest eigenvalues
 
         plt.figure()
-        plt.title("Kmeans")
+        plt.title("Kmeans, n_vertices = {}".format(n_vertices))
         for i in xrange(n_clusters):
             ds = W[np.where(spectral_labels == i)]
             plt.plot(ds[:,0], ds[:,1], color=color_map[i], marker='o', markersize=5, ls='')
