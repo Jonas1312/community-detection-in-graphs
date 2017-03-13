@@ -20,9 +20,10 @@ yNMI_adjacency = [0]*len(x_axis)
 n_communities = 2
 cin = 15
 cout = 6
-n_iterations = 3
+n_iterations = 2
 
-for _ in xrange(n_iterations):
+for n in xrange(n_iterations):
+    print("Iteration: " + str(n))
     for i, n_vertices in enumerate(x_axis):
         print("Number of vertices: " + str(n_vertices))
         probability_matrix = (1.0 / n_vertices) * (np.full((n_communities, n_communities), cout) + np.diag([cin - cout] * n_communities))
