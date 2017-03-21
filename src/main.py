@@ -21,14 +21,14 @@ def main():
     #----------------------------------------------------------------------
     # Stochastic block model parameters
     #----------------------------------------------------------------------
-    n_vertices = 1700  # number of vertices
+    n_vertices = 100  # number of vertices
     n_communities = 2  # number of communities
 
     # cin > cout is referred to as the assortative case
     # cout > cin is called the disassortative case
-    cin = 0.55
-    cout = 0.45
-    probability_matrix = (np.full((n_communities,n_communities), cout) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities (to generate a sparse graph)
+    cin = 15
+    cout = 5
+    probability_matrix = (1.0/n_vertices)*(np.full((n_communities,n_communities), cout) + np.diag([cin-cout]*n_communities)) # matrix of edge probabilities (to generate a sparse graph)
     sbm = SBM(n_vertices, n_communities, probability_matrix)
     print("Average degree: {}, abs(cin - cout): {}, n_commuties*sqrt(c): {}".format(sbm.average_degree, abs(cin-cout), n_communities*np.sqrt(sbm.average_degree)))
 
